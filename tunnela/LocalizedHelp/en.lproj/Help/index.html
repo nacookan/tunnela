@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tunnela Help</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      margin: 28px;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.65;
+      font-size: 15px;
+      max-width: 820px;
+    }
+    h1 { margin: 0 0 10px; font-size: 30px; }
+    h2 { margin: 28px 0 8px; font-size: 20px; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+    h3 { margin: 18px 0 6px; font-size: 16px; }
+    table { border-collapse: collapse; width: 100%; margin: 8px 0; }
+    th { text-align: left; background: rgba(128,128,128,0.1); padding: 6px 10px; }
+    td { padding: 6px 10px; border-bottom: 1px solid rgba(128,128,128,0.2); vertical-align: top; }
+    td:first-child { font-weight: 500; white-space: nowrap; width: 200px; }
+    code { font-family: monospace; background: rgba(128,128,128,0.12); padding: 1px 5px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <h1>tunnela</h1>
+  <p>
+    tunnela helps configure SSH tunnels for SSH port forwarding between two Macs at different locations.
+    Neither Mac needs a fixed IP address or open ports —
+    a relay server that both Macs can SSH into is all that's required.
+  </p>
+  <p>Intended for users familiar with SSH tunnels and port forwarding.</p>
+
+  <h2>How It Works</h2>
+  <p>
+    The <strong>Host</strong> Mac opens a reverse tunnel to the relay:<br>
+    <code>ssh -R &lt;internal-port&gt;:localhost:22 user@relay</code>
+  </p>
+  <p>
+    The <strong>Client</strong> Mac connects through the relay to reach the Host:<br>
+    <code>ssh -L &lt;local-port&gt;:localhost:&lt;internal-port&gt; user@relay</code>
+  </p>
+  <p>The Client can then reach the Host's SSH at <code>localhost:&lt;local-port&gt;</code>. Adding service forwards extends this to any other port on the Host — VNC, HTTP, and so on.</p>
+
+  <h2>Host Settings</h2>
+  <table>
+    <tr><th>Field</th><th>Description</th></tr>
+    <tr><td>Address</td><td>Relay server hostname or IP address</td></tr>
+    <tr><td>SSH Port</td><td>SSH port of the relay server (usually 22)</td></tr>
+    <tr><td>Username</td><td>SSH login user on the relay server</td></tr>
+    <tr><td>Authentication</td><td>SSH key or password for the relay</td></tr>
+    <tr><td>Internal Port</td><td>Virtual port allocated on the relay (e.g. <code>22222</code>). Choose a number that does not conflict with other users on a shared server.</td></tr>
+    <tr><td>This Mac's SSH Port</td><td>The SSH port on this Mac that the reverse tunnel forwards to (usually <code>22</code>)</td></tr>
+  </table>
+
+  <h2>Client Settings</h2>
+
+  <h3>Relay Server</h3>
+  <p>Use the same address, internal port, username, and authentication as the Host.</p>
+  <table>
+    <tr><th>Field</th><th>Description</th></tr>
+    <tr><td>Local Port</td><td>Port on this Mac that receives the relay tunnel (e.g. <code>22222</code>). Used as <code>-p</code> when connecting to the Host.</td></tr>
+  </table>
+
+  <h3>Host Connection</h3>
+  <table>
+    <tr><th>Field</th><th>Description</th></tr>
+    <tr><td>Username</td><td>SSH login user on the Host Mac</td></tr>
+    <tr><td>Authentication</td><td>SSH key or password for the Host Mac</td></tr>
+  </table>
+
+  <h3>Service Forwards</h3>
+  <p>
+    Each entry creates an additional <code>ssh -L</code> forward through the relay tunnel to a specific port on the Host.
+    Forwards can be added or removed while a connection is active.
+  </p>
+  <table>
+    <tr><th>Field</th><th>Description</th></tr>
+    <tr><td>Host Port</td><td>Port on the Host to forward (e.g. <code>5900</code> for VNC)</td></tr>
+    <tr><td>This Mac's Port</td><td>Local port to listen on (e.g. <code>55900</code>)</td></tr>
+  </table>
+
+  <h3>SOCKS5 Proxy</h3>
+  <p>
+    Runs <code>ssh -D &lt;port&gt;</code> through the relay tunnel, providing a SOCKS5 proxy to the Host's network.
+    Configure your browser or system proxy to use <code>localhost:&lt;port&gt;</code>.
+  </p>
+</body>
+</html>

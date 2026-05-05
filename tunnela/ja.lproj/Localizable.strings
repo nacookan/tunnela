@@ -1,0 +1,128 @@
+/* Mode names */
+"mode.host.display"    = "ホストモード（接続を受け入れる）";
+"mode.host.short"      = "ホスト";
+"mode.client.display"  = "クライアントモード（接続しに行く）";
+"mode.client.short"    = "クライアント";
+"mode.host.mode_name"  = "ホストモード";
+"mode.client.mode_name" = "クライアントモード";
+
+/* Auth types */
+"auth.ssh_key"  = "SSH鍵";
+"auth.password" = "パスワード";
+
+/* Tunnel states */
+"state.stopped"    = "停止中";
+"state.connecting" = "再接続待機中...";
+"state.running"    = "接続中";
+"state.failed"     = "エラー: %@";
+
+/* Sidebar */
+"sidebar.title"  = "履歴";
+"sidebar.empty"  = "接続履歴がありません";
+"sidebar.toggle" = "履歴を表示/非表示";
+
+/* History row */
+"history.context.rename" = "名前を変更";
+"history.context.pin"    = "ピン留め";
+"history.context.unpin"  = "ピン留めを解除";
+"history.context.delete" = "削除";
+"history.connected"      = "接続中";
+
+/* Section headers */
+"section.role"           = "モード";
+"section.relay"          = "中継サーバー";
+"section.host_conn"      = "ホストへの接続";
+"section.forwards"       = "サービス転送";
+"section.socks5"         = "SOCKS5プロキシ";
+"section.active_tunnels" = "稼働中のトンネル";
+
+/* Role section */
+"role.this_mac"    = "動作モード";
+"role.host.desc"   = "中継サーバーにトンネルを張って接続を待つ";
+"role.client.desc" = "中継サーバー経由でホストに接続する";
+
+/* Relay server fields */
+"relay.address"            = "アドレス";
+"relay.ssh_port"           = "SSHポート";
+"relay.ssh_port.desc"      = "通常は22";
+"relay.username"           = "ユーザー名";
+"relay.auth_method"        = "認証方法";
+"relay.key_file"           = "鍵ファイル";
+"relay.key_file.desc"      = "秘密鍵のパス";
+"relay.passphrase"         = "パスフレーズ";
+"relay.passphrase.desc"    = "鍵にパスフレーズがある場合\nない場合は空欄でOK";
+"relay.password_field"     = "パスワード";
+"relay.internal_port"      = "内部ポート";
+"relay.internal_port.desc" = "中継サーバー上の仮想ポート\n他ユーザーと被らない番号を選ぶ";
+"relay.host_ssh_port"      = "このMacのSSHポート";
+
+/* Host connection fields */
+"host.username"        = "ユーザー名";
+"host.username.desc"   = "ホスト側のユーザー名";
+"host.key_file"        = "鍵ファイル";
+"host.key_file.desc"   = "ホストに接続するための秘密鍵";
+"host.local_port"      = "ローカルポート";
+"host.local_port.desc" = "このMac側に用意する中継トンネルの出入口ポート\n他と被らない番号を選ぶ";
+
+/* Auth common */
+"auth.prompt_each"            = "毎回入力する";
+"auth.passphrase.placeholder" = "（パスフレーズなしなら空欄）";
+"auth.password.placeholder"   = "パスワード";
+"auth.select"                 = "選択...";
+
+/* Service forwards */
+"forward.add"              = "転送を追加";
+"forward.empty.idle"       = "ホスト側のポートにこのMacから接続できるようにします";
+"forward.empty.active"     = "転送を追加すると、接続を維持したまま即座に有効になります";
+"forward.host_port"        = "ホストのポート";
+"forward.local_port"       = "このMacのポート";
+"forward.name.placeholder" = "名前（VNC、HTTP など）";
+"forward.delete.tip"       = "停止してリストから削除";
+"forward.delete"           = "削除";
+"forward.draft.confirm"    = "この転送を追加";
+"forward.draft.cancel"     = "キャンセル";
+
+/* SOCKS5 */
+"socks5.enable"     = "有効にする";
+"socks5.port_label" = "ポート";
+"socks5.desc"       = "このMacをSOCKS5プロキシにして\nホスト側のネットワークに接続できるようにします";
+
+/* Active tunnels */
+"tunnel.restart" = "起動";
+"tunnel.stop"    = "停止";
+
+/* Connection buttons */
+"connect.start"      = "トンネルを起動";
+"connect.reconnect"  = "再接続";
+"connect.disconnect" = "切断";
+
+/* Connection banner */
+"banner.connected"       = "接続中";
+"banner.tunnels.all"     = "全%d本のトンネルが稼働中";
+"banner.tunnels.partial" = "%d / %d 稼働中";
+
+/* Reconnect alert */
+"alert.reconnect.title"   = "現在接続中です";
+"alert.reconnect.message" = "現在の接続を切断してから、新しい接続を開始します。";
+"alert.reconnect.confirm" = "切断して再接続";
+
+/* Delete active connection alert */
+"alert.delete.title"   = "接続を切断してから削除しますか？";
+"alert.delete.message" = "接続を切断してから、この履歴を削除します。";
+"alert.delete.confirm" = "切断して削除";
+
+/* Common */
+"common.cancel" = "キャンセル";
+
+/* Password prompt */
+"prompt.title"         = "認証情報を入力してください";
+"prompt.subtitle"      = "この情報は保存されません";
+"prompt.section.relay" = "中継サーバー";
+"prompt.section.host"  = "ホスト接続";
+"prompt.connect"       = "接続";
+
+/* Password prompt field labels (format) */
+"prompt.relay.password.label"   = "%@@%@のパスワード";
+"prompt.relay.passphrase.label" = "%@のパスフレーズ";
+"prompt.host.password.label"    = "ホスト%@のパスワード";
+"prompt.host.passphrase.label"  = "ホスト鍵%@のパスフレーズ";

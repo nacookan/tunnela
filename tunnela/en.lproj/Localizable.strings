@@ -1,0 +1,128 @@
+/* Mode names */
+"mode.host.display"    = "Host Mode (Accept Connections)";
+"mode.host.short"      = "Host";
+"mode.client.display"  = "Client Mode (Connect to Host)";
+"mode.client.short"    = "Client";
+"mode.host.mode_name"  = "Host Mode";
+"mode.client.mode_name" = "Client Mode";
+
+/* Auth types */
+"auth.ssh_key"  = "SSH Key";
+"auth.password" = "Password";
+
+/* Tunnel states */
+"state.stopped"    = "Stopped";
+"state.connecting" = "Waiting to reconnect...";
+"state.running"    = "Connected";
+"state.failed"     = "Error: %@";
+
+/* Sidebar */
+"sidebar.title"  = "History";
+"sidebar.empty"  = "No connection history";
+"sidebar.toggle" = "Show/Hide History";
+
+/* History row */
+"history.context.rename" = "Rename";
+"history.context.pin"    = "Pin";
+"history.context.unpin"  = "Unpin";
+"history.context.delete" = "Delete";
+"history.connected"      = "Connected";
+
+/* Section headers */
+"section.role"          = "Mode";
+"section.relay"         = "Relay Server";
+"section.host_conn"     = "Host Connection";
+"section.forwards"      = "Service Forwards";
+"section.socks5"        = "SOCKS5 Proxy";
+"section.active_tunnels" = "Active Tunnels";
+
+/* Role section */
+"role.this_mac"    = "Operating Mode";
+"role.host.desc"   = "Wait for connections by opening a tunnel to the relay server";
+"role.client.desc" = "Connect to host via relay server";
+
+/* Relay server fields */
+"relay.address"               = "Address";
+"relay.ssh_port"              = "SSH Port";
+"relay.ssh_port.desc"         = "Usually 22";
+"relay.username"              = "Username";
+"relay.auth_method"           = "Authentication";
+"relay.key_file"              = "Key File";
+"relay.key_file.desc"         = "Path to private key";
+"relay.passphrase"            = "Passphrase";
+"relay.passphrase.desc"       = "Enter if key has a passphrase\nLeave blank if none";
+"relay.password_field"        = "Password";
+"relay.internal_port"         = "Internal Port";
+"relay.internal_port.desc"    = "Virtual port on relay server\nChoose a number not used by others";
+"relay.host_ssh_port"         = "This Mac's SSH Port";
+
+/* Host connection fields */
+"host.username"          = "Username";
+"host.username.desc"     = "Username on the host side";
+"host.key_file"          = "Key File";
+"host.key_file.desc"     = "Private key for connecting to host";
+"host.local_port"        = "Local Port";
+"host.local_port.desc"   = "Relay tunnel entry port on this Mac\nChoose a number not used by others";
+
+/* Auth common */
+"auth.prompt_each"            = "Enter each time";
+"auth.passphrase.placeholder" = "(Leave blank if no passphrase)";
+"auth.password.placeholder"   = "Password";
+"auth.select"                 = "Select...";
+
+/* Service forwards */
+"forward.add"              = "Add Forward";
+"forward.empty.idle"       = "Connect to host-side ports from this Mac";
+"forward.empty.active"     = "Adding a forward takes effect immediately while connected";
+"forward.host_port"        = "Host Port";
+"forward.local_port"       = "This Mac's Port";
+"forward.name.placeholder" = "Name (VNC, HTTP, etc.)";
+"forward.delete.tip"       = "Stop and remove from list";
+"forward.delete"           = "Delete";
+"forward.draft.confirm"    = "Add This Forward";
+"forward.draft.cancel"     = "Cancel";
+
+/* SOCKS5 */
+"socks5.enable"    = "Enable";
+"socks5.port_label" = "Port";
+"socks5.desc"      = "Make this Mac a SOCKS5 proxy\nto access the host-side network";
+
+/* Active tunnels */
+"tunnel.restart" = "Start";
+"tunnel.stop"    = "Stop";
+
+/* Connection buttons */
+"connect.start"      = "Start Tunnel";
+"connect.reconnect"  = "Reconnect";
+"connect.disconnect" = "Disconnect";
+
+/* Connection banner */
+"banner.connected"       = "Connected";
+"banner.tunnels.all"     = "All %d tunnels active";
+"banner.tunnels.partial" = "%d / %d active";
+
+/* Reconnect alert */
+"alert.reconnect.title"   = "Currently Connected";
+"alert.reconnect.message" = "Disconnect from current connection and start a new one.";
+"alert.reconnect.confirm" = "Disconnect and Reconnect";
+
+/* Delete active connection alert */
+"alert.delete.title"   = "Disconnect and Delete?";
+"alert.delete.message" = "Disconnects first, then deletes this history entry.";
+"alert.delete.confirm" = "Disconnect and Delete";
+
+/* Common */
+"common.cancel" = "Cancel";
+
+/* Password prompt */
+"prompt.title"         = "Enter Credentials";
+"prompt.subtitle"      = "This information will not be saved.";
+"prompt.section.relay" = "Relay Server";
+"prompt.section.host"  = "Host Connection";
+"prompt.connect"       = "Connect";
+
+/* Password prompt field labels (format) */
+"prompt.relay.password.label"    = "%@@%@ Password";
+"prompt.relay.passphrase.label"  = "%@ Passphrase";
+"prompt.host.password.label"     = "Host %@ Password";
+"prompt.host.passphrase.label"   = "Host Key %@ Passphrase";

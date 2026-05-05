@@ -1,0 +1,15 @@
+# Claude Code session files (personal data)
+.claude/
+
+# Build artifacts
+build/
+DerivedData/
+
+# Xcode user-specific files
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+
+# macOS metadata
+.DS_Store

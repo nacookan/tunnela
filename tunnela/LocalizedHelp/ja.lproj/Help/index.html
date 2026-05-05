@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tunnelaヘルプ</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      margin: 28px;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      line-height: 1.65;
+      font-size: 15px;
+      max-width: 820px;
+    }
+    h1 { margin: 0 0 10px; font-size: 30px; }
+    h2 { margin: 28px 0 8px; font-size: 20px; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+    h3 { margin: 18px 0 6px; font-size: 16px; }
+    table { border-collapse: collapse; width: 100%; margin: 8px 0; }
+    th { text-align: left; background: rgba(128,128,128,0.1); padding: 6px 10px; }
+    td { padding: 6px 10px; border-bottom: 1px solid rgba(128,128,128,0.2); vertical-align: top; }
+    td:first-child { font-weight: 500; white-space: nowrap; width: 200px; }
+    code { font-family: monospace; background: rgba(128,128,128,0.12); padding: 1px 5px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <h1>tunnela</h1>
+  <p>
+    拠点の異なる2台のMac間で、SSHポートフォワーディングによるポートアクセスを実現するためのSSHトンネル構成を支援するアプリです。
+    各拠点のMacに固定IPアドレスやポート開放は不要です。
+    双方からSSH接続ができる中継サーバーがあれば動作します。
+  </p>
+  <p>SSHトンネルおよびポートフォワードの基礎知識がある方向けです。</p>
+
+  <h2>仕組み</h2>
+  <p>
+    <strong>ホスト</strong> 側のMacが中継サーバーへリバーストンネルを張ります:<br>
+    <code>ssh -R &lt;内部ポート&gt;:localhost:22 user@中継</code>
+  </p>
+  <p>
+    <strong>クライアント</strong> 側のMacが中継経由でホストに接続します:<br>
+    <code>ssh -L &lt;ローカルポート&gt;:localhost:&lt;内部ポート&gt; user@中継</code>
+  </p>
+  <p>接続後、クライアントから <code>localhost:&lt;ローカルポート&gt;</code> でホストのSSHに到達できます。サービス転送を追加すれば、VNCやHTTPなど任意のポートにも同様にアクセスできます。</p>
+
+  <h2>ホストの設定</h2>
+  <table>
+    <tr><th>項目</th><th>説明</th></tr>
+    <tr><td>アドレス</td><td>中継サーバーのホスト名またはIPアドレス</td></tr>
+    <tr><td>SSHポート</td><td>中継サーバーのSSHポート（通常は22）</td></tr>
+    <tr><td>ユーザー名</td><td>中継サーバーへのSSHログインユーザー名</td></tr>
+    <tr><td>認証方法</td><td>中継サーバーへの認証（SSH鍵またはパスワード）</td></tr>
+    <tr><td>内部ポート</td><td>中継サーバー上に確保する仮想ポート（例: <code>22222</code>）。共有サーバーでは他ユーザーと被らない番号を選ぶ</td></tr>
+    <tr><td>このMacのSSHポート</td><td>リバーストンネルが転送先とするこのMacのSSHポート（通常は<code>22</code>）</td></tr>
+  </table>
+
+  <h2>クライアントの設定</h2>
+
+  <h3>中継サーバー</h3>
+  <p>アドレス・内部ポート・ユーザー名・認証はホスト側と同じ値を使います。</p>
+  <table>
+    <tr><th>項目</th><th>説明</th></tr>
+    <tr><td>ローカルポート</td><td>このMacで中継トンネルを受け取るポート（例: <code>22222</code>）。ホストへの接続時に <code>-p</code> として使われます</td></tr>
+  </table>
+
+  <h3>ホストへの接続</h3>
+  <table>
+    <tr><th>項目</th><th>説明</th></tr>
+    <tr><td>ユーザー名</td><td>ホスト側MacへのSSHログインユーザー名</td></tr>
+    <tr><td>認証方法</td><td>ホスト側Macへの認証（SSH鍵またはパスワード）</td></tr>
+  </table>
+
+  <h3>サービス転送</h3>
+  <p>
+    登録した各エントリが、中継トンネル経由でホストの特定ポートへの <code>ssh -L</code> フォワードを作成します。
+    接続中でもホットで追加・削除できます。
+  </p>
+  <table>
+    <tr><th>項目</th><th>説明</th></tr>
+    <tr><td>ホストのポート</td><td>ホスト側で転送したいポート（例: VNCなら <code>5900</code>）</td></tr>
+    <tr><td>このMacのポート</td><td>このMacで待ち受けるポート（例: <code>55900</code>）</td></tr>
+  </table>
+
+  <h3>SOCKS5プロキシ</h3>
+  <p>
+    中継トンネル経由で <code>ssh -D &lt;ポート&gt;</code> を実行し、ホスト側ネットワークへのSOCKS5プロキシを提供します。
+    ブラウザやシステムプロキシで <code>localhost:&lt;ポート&gt;</code> を指定して使います。
+  </p>
+</body>
+</html>
