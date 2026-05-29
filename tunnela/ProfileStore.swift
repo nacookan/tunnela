@@ -11,7 +11,9 @@ class HistoryStore: ObservableObject {
         return pinned + unpinned
     }
 
-    private let storageKey = "tunnela.history.v1"
+    private let storageKey = CommandLine.arguments.contains("--demo")
+        ? "tunnela.history.v1.demo"
+        : "tunnela.history.v1"
 
     init() { load() }
 

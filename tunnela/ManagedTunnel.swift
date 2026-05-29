@@ -53,6 +53,11 @@ class ManagedTunnel: ObservableObject, Identifiable {
     private func launch() {
         lastError = ""
 
+        if CommandLine.arguments.contains("--demo") {
+            state = .running
+            return
+        }
+
         let proc = Process()
         proc.executableURL = URL(fileURLWithPath: "/usr/bin/ssh")
         proc.arguments = args
