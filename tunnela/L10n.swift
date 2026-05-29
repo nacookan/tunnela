@@ -8,6 +8,6 @@ enum L10n {
     }
 
     static func format(_ key: String, _ arguments: CVarArg...) -> String {
-        String(format: text(key), locale: Locale.current, arguments: arguments)
+        String(format: text(key), arguments: arguments)
     }
 }
