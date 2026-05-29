@@ -25,8 +25,7 @@ struct FormSection<Content: View>: View {
             VStack(spacing: 0) {
                 content()
             }
-            .background(Color(nsColor: .controlBackgroundColor))
-            .cornerRadius(10)
+            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 10))
             .padding(.horizontal, 14)
         }
     }

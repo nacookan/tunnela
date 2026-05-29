@@ -142,8 +142,7 @@ struct TunnelRow: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
-        .background(Color(nsColor: .controlBackgroundColor))
-        .cornerRadius(6)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 6))
         .overlay(RoundedRectangle(cornerRadius: 6).stroke(stateColor.opacity(0.25), lineWidth: 1))
     }
 }
