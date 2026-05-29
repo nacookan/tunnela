@@ -90,6 +90,10 @@
 /* Active tunnels */
 "tunnel.restart" = "起動";
 "tunnel.stop"    = "停止";
+"tunnel.relay.label"          = "中継トンネル → %@";
+"tunnel.forward.default_name" = "ポート転送";
+"tunnel.forward.label"        = "%@  ホスト:%d ← localhost:%d";
+"tunnel.socks5.label"         = "SOCKS5プロキシ  localhost:%d";
 
 /* Connection buttons */
 "connect.start"      = "トンネルを起動";

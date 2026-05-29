@@ -23,7 +23,7 @@ class SSHManager: ObservableObject {
         switch config.mode {
         case .sideA:
             let t = makeTunnel(
-                "中継トンネル → \(config.relayHost)",
+                L10n.format("tunnel.relay.label", config.relayHost),
                 args: relayArgs(config),
                 env: authEnv(authType: config.relayAuthType,
                              password: config.relayPassword,
@@ -36,7 +36,7 @@ class SSHManager: ObservableObject {
         case .sideB:
             var all: [ManagedTunnel] = []
             let relay = makeTunnel(
-                "中継トンネル → \(config.relayHost)",
+                L10n.format("tunnel.relay.label", config.relayHost),
                 args: relayArgs(config),
                 env: authEnv(authType: config.relayAuthType,
                              password: config.relayPassword,
@@ -142,9 +142,9 @@ class SSHManager: ObservableObject {
     }
 
     private func makeServiceTunnel(_ fwd: ServiceForward, config: TunnelConfig) -> ManagedTunnel {
-        let label = fwd.name.isEmpty ? "ポート転送" : fwd.name
+        let label = fwd.name.isEmpty ? L10n.text("tunnel.forward.default_name") : fwd.name
         return ManagedTunnel(
-            name: "\(label)  ホスト:\(fwd.targetPort) ← localhost:\(fwd.localPort)",
+            name: L10n.format("tunnel.forward.label", label, fwd.targetPort, fwd.localPort),
             args: serviceArgs(fwd, config: config),
             env: authEnv(authType: config.hostAuthType,
                          password: config.hostPassword,
@@ -155,7 +155,7 @@ class SSHManager: ObservableObject {
 
     private func makeSocks5Tunnel(port: Int, config c: TunnelConfig) -> ManagedTunnel {
         ManagedTunnel(
-            name: "SOCKS5プロキシ  localhost:\(port)",
+            name: L10n.format("tunnel.socks5.label", port),
             args: socks5Args(port: port, config: c),
             env: authEnv(authType: c.hostAuthType, password: c.hostPassword, keyPassphrase: c.hostKeyPassphrase),
             isSocks5: true

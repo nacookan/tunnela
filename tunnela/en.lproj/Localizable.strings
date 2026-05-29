@@ -90,6 +90,10 @@
 /* Active tunnels */
 "tunnel.restart" = "Start";
 "tunnel.stop"    = "Stop";
+"tunnel.relay.label"        = "Relay Tunnel → %@";
+"tunnel.forward.default_name" = "Port Forward";
+"tunnel.forward.label"      = "%@  Host:%d ← localhost:%d";
+"tunnel.socks5.label"       = "SOCKS5 Proxy  localhost:%d";
 
 /* Connection buttons */
 "connect.start"      = "Start Tunnel";
