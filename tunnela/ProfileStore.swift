@@ -19,8 +19,11 @@ class HistoryStore: ObservableObject {
 
     // 接続時に呼ぶ。同じ設定がすでにあれば削除してから新規追加（重複排除）
     func recordConnection(_ config: TunnelConfig) {
+        let existingName = entries.first { $0.config == config }?.customName
         entries.removeAll { $0.config == config }
-        entries.append(HistoryEntry(config: config, timestamp: Date()))
+        var entry = HistoryEntry(config: config, timestamp: Date())
+        entry.customName = existingName
+        entries.append(entry)
         persist()
     }
 
