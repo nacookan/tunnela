@@ -25,7 +25,10 @@ class ManagedTunnel: ObservableObject, Identifiable {
         self.envOverrides = env
         self.serviceForwardId = serviceForwardId
         self.isSocks5 = isSocks5
-        self.commandLine = (["ssh"] + args).joined(separator: " ")
+        let home = ProcessInfo.processInfo.environment["HOME"] ?? ""
+        self.commandLine = (["ssh"] + args)
+            .joined(separator: " ")
+            .replacingOccurrences(of: home + "/", with: "~/")
     }
 
     func start(reconnect: Bool = false) {
