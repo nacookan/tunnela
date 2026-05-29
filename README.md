@@ -6,8 +6,7 @@
 
 ---
 
-![Host Mode](docs/screen1.png)
-![Client Mode](docs/screen2.png)
+![screenshots](docs/screenshots.png)
 
 ## ダウンロード
 
