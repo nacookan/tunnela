@@ -13,3 +13,7 @@ xcuserdata/
 
 # macOS metadata
 .DS_Store
+
+# Animation tool: generated artifacts (videos output to ../videos/ outside this repo)
+.video-frames/
+*.mp4

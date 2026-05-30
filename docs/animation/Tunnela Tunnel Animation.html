@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>tunnela — How the tunnels work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="anim.css" />
+</head>
+<body>
+  <template id="__bundler_thumbnail">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" fill="#eef2f6"/>
+      <circle cx="50" cy="30" r="9" fill="none" stroke="#13171b" stroke-width="3"/>
+      <circle cx="28" cy="70" r="9" fill="none" stroke="#2f7fd0" stroke-width="3"/>
+      <circle cx="72" cy="70" r="9" fill="none" stroke="#0a9a5d" stroke-width="3"/>
+      <path d="M34 64 L46 36" stroke="#2f7fd0" stroke-width="4" stroke-linecap="round"/>
+      <path d="M66 64 L54 36" stroke="#0a9a5d" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+  </template>
+  <div class="stage" id="stage">
+    <div class="board" id="board">
+
+      <!-- ===== tube layer (behind machines) ===== -->
+      <svg class="layer" id="tubes" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+
+        <!-- HOST RELAY TUNNEL : grows from Home boundary -> relay:22 -> relay:22222, and boundary -> home:22.  Flow relay22222 -> home22 -->
+        <g id="g-host">
+          <path id="host-out-tube"  class="tube"      style="stroke:var(--host-ch);stroke-width:32" d="M 320 445 C 470 320 556 235 606 172 C 606 145 612 120 618 104"/>
+          <path id="host-out-flow"  class="flow rev"  style="stroke:var(--host);stroke-width:19;opacity:0" d="M 320 445 C 470 320 556 235 606 172 C 606 145 612 120 618 104"/>
+          <path id="host-out-sheen" class="sheen rev" style="stroke:#ffffff;stroke-width:5;opacity:0" d="M 320 445 C 470 320 556 235 606 172 C 606 145 612 120 618 104"/>
+          <path id="host-in-tube"   class="tube"      style="stroke:var(--host-ch);stroke-width:32" d="M 320 445 L 300 510"/>
+          <path id="host-in-flow"   class="flow"      style="stroke:var(--host);stroke-width:19;opacity:0" d="M 320 445 L 300 510"/>
+          <path id="host-in-sheen"  class="sheen"     style="stroke:#ffffff;stroke-width:5;opacity:0" d="M 320 445 L 300 510"/>
+        </g>
+
+        <!-- CLIENT RELAY TUNNEL : grows from Your boundary -> relay:22 -> relay:22222, and boundary -> your:22222.  Flow your22222 -> relay22222 -->
+        <g id="g-client">
+          <path id="client-out-tube"  class="tube"      style="stroke:var(--client-ch);stroke-width:32" d="M 940 445 C 790 320 704 235 674 172 C 674 145 668 120 662 104"/>
+          <path id="client-out-flow"  class="flow"      style="stroke:var(--client);stroke-width:19;opacity:0" d="M 940 445 C 790 320 704 235 674 172 C 674 145 668 120 662 104"/>
+          <path id="client-out-sheen" class="sheen"     style="stroke:#ffffff;stroke-width:5;opacity:0" d="M 940 445 C 790 320 704 235 674 172 C 674 145 668 120 662 104"/>
+          <path id="client-in-tube"   class="tube"      style="stroke:var(--client-ch);stroke-width:32" d="M 940 445 L 970 510"/>
+          <path id="client-in-flow"   class="flow rev"  style="stroke:var(--client);stroke-width:19;opacity:0" d="M 940 445 L 970 510"/>
+          <path id="client-in-sheen"  class="sheen rev" style="stroke:#ffffff;stroke-width:5;opacity:0" d="M 940 445 L 970 510"/>
+        </g>
+
+        <!-- SERVICE FORWARD TUNNEL : A -> your:22222 -> (inside client tube) -> relay:22222 -> (inside host tube) -> home:22 -> B -->
+        <g id="g-service">
+          <path id="service-tube" class="tube" style="stroke:var(--service-ch);stroke-width:13" d="M 970 548 L 970 510 L 940 445 C 790 320 704 235 674 172 C 674 145 668 120 662 104 L 618 104 C 612 120 606 145 606 172 C 556 235 470 320 320 445 L 300 510 L 300 548"/>
+          <path id="service-flow" class="flow" style="stroke:var(--service);stroke-width:7;opacity:0" d="M 970 548 L 970 510 L 940 445 C 790 320 704 235 674 172 C 674 145 668 120 662 104 L 618 104 C 612 120 606 145 606 172 C 556 235 470 320 320 445 L 300 510 L 300 548"/>
+        </g>
+
+        <!-- SOCKS5 PROXY TUNNEL : 1080 -> your:22222 -> (inside client tube) -> relay:22222 -> (inside host tube) -> home:22 -->
+        <g id="g-socks">
+          <path id="socks-tube" class="tube" style="stroke:var(--socks-ch);stroke-width:13" d="M 1058 548 L 970 510 L 940 445 C 790 320 704 235 674 172 C 674 145 668 120 662 104 L 618 104 C 612 120 606 145 606 172 C 556 235 470 320 320 445 L 300 510"/>
+          <path id="socks-flow" class="flow" style="stroke:var(--socks);stroke-width:7;opacity:0" d="M 1058 548 L 970 510 L 940 445 C 790 320 704 235 674 172 C 674 145 668 120 662 104 L 618 104 C 612 120 606 145 606 172 C 556 235 470 320 320 445 L 300 510"/>
+        </g>
+
+        <!-- egress: beyond Home Mac :22 there is NO tunnel — only the data dots fly through open space
+             (guide paths live in the dots layer below) -->
+      </svg>
+
+      <!-- ===== UI layer (machines, ports, apps, labels) ===== -->
+      <div class="layer-ui" id="ui">
+
+        <!-- home network region -->
+        <div class="region" id="homenet" style="left:50px; top:268px; width:338px; height:380px; opacity:0;">
+          <div class="region-tag" style="left:18px; top:-11px;">Home Network</div>
+        </div>
+
+        <!-- machines -->
+        <div class="mac" id="m-relay" style="left:470px; top:48px; width:340px; height:124px;">
+          <div class="mac-head"><div class="mac-kicker">on the internet</div><div class="mac-title">Relay</div></div>
+          <div class="mac-icon"></div>
+        </div>
+
+        <div class="mac" id="m-home" style="left:90px; top:445px; width:280px; height:183px;">
+          <div class="mac-head"><div class="mac-kicker">at home</div><div class="mac-title">Home Mac</div></div>
+          <div class="mac-icon"></div>
+        </div>
+
+        <div class="mac" id="m-your" style="left:910px; top:445px; width:280px; height:183px;">
+          <div class="mac-head right"><div class="mac-kicker">where you are</div><div class="mac-title">Your Mac</div></div>
+          <div class="mac-icon" style="left:15px; right:auto;"></div>
+        </div>
+        <div class="you-here" id="you-here" style="left:1050px; top:430px; opacity:0;">
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+            <circle cx="12" cy="7" r="4"></circle>
+            <path d="M4 22 C4 16 8 14 12 14 C16 14 20 16 20 22 Z"></path>
+          </svg>
+          <span class="you-here-label">you</span>
+        </div>
+
+        <!-- LAN device -->
+        <div class="mac small" id="m-lan" style="left:70px; top:286px; width:180px; height:92px; opacity:0;">
+          <div class="mac-head"><div class="mac-kicker">same LAN</div><div class="mac-title">LAN Device</div></div>
+        </div>
+
+        <!-- internet -->
+        <div class="inet" id="m-inet" style="left:210px; top:180px; width:160px; height:62px; opacity:0;"><span class="glb"></span>Internet</div>
+
+        <!-- ports : only relay :22 sits on the boundary (exposed); all others are inside -->
+        <div class="port exposed" id="p-relay-22" style="left:640px; top:172px;">:22 ssh</div>
+        <div class="expo" id="expo" style="left:640px; top:196px;">↑ exposed</div>
+        <div class="port" id="p-relay-22222" style="left:640px; top:102px;">:22222</div>
+        <div class="port" id="p-home-22"    style="left:300px; top:510px;">:22</div>
+        <div class="port" id="p-home-B"     style="left:300px; top:548px;">:‹portB›</div>
+        <div class="port" id="p-your-22222" style="left:970px; top:510px;">:22222</div>
+        <div class="port" id="p-your-A"     style="left:970px; top:548px;">:‹portA›</div>
+        <div class="port" id="p-your-1080"  style="left:1058px; top:548px;">:1080</div>
+
+        <!-- apps -->
+        <div class="app server"     id="app-svc-server" style="left:288px; top:586px; opacity:0;">Server App<span class="sub">listens :‹portB›</span></div>
+        <div class="app client-app" id="app-svc-client" style="left:990px; top:600px; opacity:0;">Client App<span class="sub">dials :‹portA›</span></div>
+        <div class="app server"     id="app-soc-server" style="left:160px; top:352px; opacity:0;">Server App</div>
+        <div class="app client-app" id="app-soc-client" style="left:990px; top:600px; opacity:0;">Client App<span class="sub">SOCKS :1080</span></div>
+
+        <!-- tunnel labels -->
+        <div class="tlabel" id="lbl-host"    style="left:225px; top:676px; opacity:0;">Host Relay Tunnel</div>
+        <div class="tlabel" id="lbl-client"  style="left:1055px; top:676px; opacity:0;">Client Relay Tunnel</div>
+        <div class="tlabel" id="lbl-service" style="left:640px; top:676px; opacity:0;">Service Forward Tunnel</div>
+        <div class="tlabel" id="lbl-socks"   style="left:640px; top:676px; opacity:0;">SOCKS5 Proxy Tunnel</div>
+      </div>
+
+      <!-- ===== dots layer (above machines) ===== -->
+      <svg class="layer" id="dots" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <path id="dp-svc"  class="dotpath" fill="none" stroke="none" d="M 990 600 L 970 548 L 970 510 L 940 445 C 790 320 704 235 674 172 C 674 145 668 120 662 104 L 618 104 C 612 120 606 145 606 172 C 556 235 470 320 320 445 L 300 510 L 300 548 L 288 586"/>
+        <path id="dp-slan" class="dotpath" fill="none" stroke="none" d="M 990 600 L 1058 548 L 970 510 L 940 445 C 790 320 704 235 674 172 C 674 145 668 120 662 104 L 618 104 C 612 120 606 145 606 172 C 556 235 470 320 320 445 L 300 510 C 240 468 192 416 162 372 L 160 352"/>
+        <path id="dp-snet" class="dotpath" fill="none" stroke="none" d="M 990 600 L 1058 548 L 970 510 L 940 445 C 790 320 704 235 674 172 C 674 145 668 120 662 104 L 618 104 C 612 120 606 145 606 172 C 556 235 470 320 320 445 L 300 510 C 282 440 228 300 210 205 L 210 198"/>
+
+        <circle id="jring" class="jring" cx="640" cy="102" r="0" stroke="var(--ink)" stroke-width="2"/>
+
+        <circle class="dot d-svc"  r="7" cx="-50" cy="-50" fill="var(--service)"/>
+        <circle class="dot d-svc"  r="7" cx="-50" cy="-50" fill="var(--service)"/>
+        <circle class="dot d-svc"  r="7" cx="-50" cy="-50" fill="var(--service)"/>
+        <circle class="dot d-svc"  r="7" cx="-50" cy="-50" fill="var(--service)"/>
+        <circle class="dot d-svc"  r="7" cx="-50" cy="-50" fill="var(--service)"/>
+        <circle class="dot d-svc"  r="7" cx="-50" cy="-50" fill="var(--service)"/>
+        <circle class="dot d-slan" r="7" cx="-50" cy="-50" fill="var(--socks)"/>
+        <circle class="dot d-slan" r="7" cx="-50" cy="-50" fill="var(--socks)"/>
+        <circle class="dot d-slan" r="7" cx="-50" cy="-50" fill="var(--socks)"/>
+        <circle class="dot d-slan" r="7" cx="-50" cy="-50" fill="var(--socks)"/>
+        <circle class="dot d-slan" r="7" cx="-50" cy="-50" fill="var(--socks)"/>
+        <circle class="dot d-slan" r="7" cx="-50" cy="-50" fill="var(--socks)"/>
+        <circle class="dot d-snet" r="7" cx="-50" cy="-50" fill="var(--socks)"/>
+        <circle class="dot d-snet" r="7" cx="-50" cy="-50" fill="var(--socks)"/>
+        <circle class="dot d-snet" r="7" cx="-50" cy="-50" fill="var(--socks)"/>
+        <circle class="dot d-snet" r="7" cx="-50" cy="-50" fill="var(--socks)"/>
+        <circle class="dot d-snet" r="7" cx="-50" cy="-50" fill="var(--socks)"/>
+        <circle class="dot d-snet" r="7" cx="-50" cy="-50" fill="var(--socks)"/>
+      </svg>
+
+    </div>
+
+    <!-- controls -->
+    <div class="controls">
+      <button class="pbtn" id="playBtn" aria-label="Play/Pause">❚❚</button>
+      <input class="scrub" id="scrub" type="range" min="0" max="1000" value="0" />
+      <span class="time" id="time">0.0 / 0.0s</span>
+    </div>
+  </div>
+
+  <script src="anim.js"></script>
+  <script>
+    /* recording mode: open with #clean (or press "h") to hide the controls bar
+       for a chrome-free screen recording. The animation autoplays and loops. */
+    (function(){
+      function apply(){ document.body.classList.toggle('clean', location.hash.toLowerCase().indexOf('clean')>=0 || location.hash.toLowerCase().indexOf('record')>=0); }
+      window.addEventListener('hashchange', apply); apply();
+      document.addEventListener('keydown', function(e){ if(e.key==='h'||e.key==='H'){ document.body.classList.toggle('clean'); } });
+    })();
+  </script>
+</body>
+</html>
