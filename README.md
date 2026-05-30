@@ -8,6 +8,8 @@
 
 ![screenshots](docs/screenshots.png)
 
+https://github.com/user-attachments/assets/f2e5acc2-d994-4feb-998e-dcb52515fe31
+
 ## ダウンロード
 
 最新バージョンは[リリースページ](../../releases/latest)からダウンロードできます。
